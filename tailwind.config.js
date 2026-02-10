@@ -18,8 +18,9 @@ export default {
       fontFamily: {
         sans: FONTS_SANS,
         serif: FONTS_SERIF,
+        mono: ['"Lekton"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         noEmoji: [
-          '"IBM Plex Sans"',
+          '"Inter"',
           'ui-sans-serif',
           'system-ui',
           '-apple-system',

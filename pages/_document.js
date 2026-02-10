@@ -18,43 +18,12 @@ class MyDocument extends Document {
     return (
       <Html lang={config.lang} className={cn(initialColorScheme)}>
         <Head>
-          {config.font && config.font === 'serif'
-            ? (
-            <>
-              <link
-                rel="preload"
-                href="/fonts/SourceSerif.var.woff2"
-                as="font"
-                type="font/woff2"
-                crossOrigin="anonymous"
-              />
-              <link
-                rel="preload"
-                href="/fonts/SourceSerif-Italic.var.woff2"
-                as="font"
-                type="font/woff2"
-                crossOrigin="anonymous"
-              />
-            </>
-              )
-            : (
-            <>
-              <link
-                rel="preload"
-                href="/fonts/IBMPlexSansVar-Roman.woff2"
-                as="font"
-                type="font/woff2"
-                crossOrigin="anonymous"
-              />
-              <link
-                rel="preload"
-                href="/fonts/IBMPlexSansVar-Italic.woff2"
-                as="font"
-                type="font/woff2"
-                crossOrigin="anonymous"
-              />
-            </>
-              )}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lekton:ital,wght@0,400;0,700;1,400&display=swap"
+            rel="stylesheet"
+          />
 
           {['zh', 'ja', 'ko'].includes(
             config.lang.slice(0, 2).toLocaleLowerCase()
