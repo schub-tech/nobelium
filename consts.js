@@ -1,4 +1,5 @@
 exports.FONTS_SANS = [
+  '"Lekton"',
   '"Inter"',
   'ui-sans-serif',
   'system-ui',

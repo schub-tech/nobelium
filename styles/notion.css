@@ -52,6 +52,7 @@
 
 .notion {
   @apply text-gray-600 dark:text-gray-300;
+  --notion-font: 'Lekton', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   overflow-wrap: break-word;
 }
 .notion,
@@ -248,4 +249,41 @@ pre[class*='language-'] {
 
 .nobelium-toggle-content > :last-child {
   @apply mb-0;
+}
+
+/* About page grid for Residents & Alumni */
+
+[data-post-slug='about'] .about-residents-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  [data-post-slug='about'] .about-residents-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-post-slug='about'] .about-residents-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+[data-post-slug='about'] .about-resident-card .notion-h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+[data-post-slug='about'] .about-resident-card .notion-asset-wrapper-image {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+[data-post-slug='about'] .about-resident-card .notion-asset-wrapper-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }

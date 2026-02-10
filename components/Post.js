@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import Image from 'next/image'
 import cn from 'classnames'
@@ -23,9 +24,57 @@ export default function Post (props) {
   const BLOG = useConfig()
   const { post, blockMap, emailHash, fullWidth = false } = props
   const { dark } = useTheme()
+  const notionRootRef = useRef(null)
+
+  useEffect(() => {
+    if (post.slug !== 'about') return
+
+    const root = notionRootRef.current
+    if (!root) return
+
+    const notionPage = root.querySelector('.notion-page')
+    if (!notionPage || notionPage.querySelector('.about-residents-grid')) return
+
+    const residentsHeading = Array.from(notionPage.querySelectorAll('h3.notion-h2'))
+      .find(node => node.textContent?.trim() === 'Residents & Alumni')
+    if (!residentsHeading) return
+
+    const grid = document.createElement('div')
+    grid.className = 'about-residents-grid'
+
+    let cursor = residentsHeading.nextElementSibling
+    while (cursor) {
+      const nameNode = cursor
+      const imageNode = nameNode.nextElementSibling
+
+      if (
+        nameNode?.tagName !== 'H4' ||
+        !nameNode.classList.contains('notion-h3') ||
+        imageNode?.tagName !== 'FIGURE' ||
+        !imageNode.classList.contains('notion-asset-wrapper-image')
+      ) {
+        break
+      }
+
+      const nextCursor = imageNode.nextElementSibling
+      const card = document.createElement('div')
+      card.className = 'about-resident-card'
+      card.appendChild(nameNode)
+      card.appendChild(imageNode)
+      grid.appendChild(card)
+      cursor = nextCursor
+    }
+
+    if (grid.children.length > 0) {
+      residentsHeading.insertAdjacentElement('afterend', grid)
+    }
+  }, [post.slug])
 
   return (
-    <article className={cn('flex flex-col', fullWidth ? 'md:px-24' : 'items-center')}>
+    <article
+      className={cn('flex flex-col', fullWidth ? 'md:px-24' : 'items-center')}
+      data-post-slug={post.slug}
+    >
       <h1 className={cn(
         'w-full font-bold text-3xl text-black dark:text-white font-mono tracking-tight',
         { 'max-w-2xl px-4': !fullWidth }
@@ -64,7 +113,10 @@ export default function Post (props) {
       )}
       <div className="self-stretch -mt-4 flex flex-col items-center lg:flex-row lg:items-stretch">
         {!fullWidth && <div className="flex-1 hidden lg:block" />}
-        <div className={fullWidth ? 'flex-1 pr-4' : 'flex-none w-full max-w-2xl px-4'}>
+        <div
+          ref={notionRootRef}
+          className={fullWidth ? 'flex-1 pr-4' : 'flex-none w-full max-w-2xl px-4'}
+        >
           <NotionRenderer recordMap={blockMap} fullPage={false} darkMode={dark} />
         </div>
         <div className={cn('order-first lg:order-[unset] w-full lg:w-auto max-w-2xl lg:max-w-[unset] lg:min-w-[160px]', fullWidth ? 'flex-none' : 'flex-1')}>
