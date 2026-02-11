@@ -95,8 +95,6 @@ const components = {
     <Toggle block={block}>{children}</Toggle>
   ),
 
-  // Disable image click-to-zoom
-  Modal: () => null
 }
 
 const mapPageUrl = id => `https://www.notion.so/${id.replace(/-/g, '')}`
@@ -139,6 +137,7 @@ export default function NotionRenderer (props) {
       <Renderer
         components={components}
         mapPageUrl={mapPageUrl}
+        isImageZoomable={false}
         {...props}
       />
     </>
