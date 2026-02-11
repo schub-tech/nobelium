@@ -139,11 +139,11 @@ export default function Post (props) {
       className={cn('flex flex-col', fullWidth ? 'md:px-24' : 'items-center')}
       data-post-slug={post.slug}
     >
-      {post.slug !== 'home' && (
+      {post.slug !== 'home' && post.slug !== 'about' && post.slug !== 'manifesto' && (
         <h1 className={cn(
           'w-full font-bold text-3xl text-black dark:text-white font-mono tracking-tight',
           { 'max-w-2xl px-4': !fullWidth && !isPage },
-          { 'max-w-4xl px-4': !fullWidth && isPage }
+          { 'max-w-6xl px-4': !fullWidth && isPage }
         )}>
           {post.title}
         </h1>
@@ -184,7 +184,7 @@ export default function Post (props) {
           ref={notionRootRef}
           className={cn({
             'flex-1 pr-4': fullWidth,
-            'flex-none w-full max-w-4xl px-4': !fullWidth && isPage,
+            'flex-none w-full max-w-6xl px-4': !fullWidth && isPage,
             'flex-none w-full max-w-2xl px-4': !fullWidth && !isPage
           })}
         >

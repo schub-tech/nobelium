@@ -10,15 +10,15 @@ const Footer = ({ fullWidth }) => {
 
   return (
     <div
-      className={`mt-6 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400 transition-all ${
-        !fullWidth ? 'max-w-4xl px-4' : 'px-4 md:px-24'
+      className={`mt-16 flex-shrink-0 m-auto w-full text-gray-500 dark:text-gray-400 transition-all ${
+        !fullWidth ? 'max-w-6xl px-4' : 'px-4 md:px-24'
       }`}
     >
-      <hr className="border-gray-200 dark:border-gray-600" />
-      <div className="my-4 text-sm leading-6">
+      <hr className="border-gray-200 dark:border-gray-800" />
+      <div className="my-6 text-sm leading-6">
         <div className="flex align-baseline justify-between flex-wrap gap-2">
-          <p>
-            © {BLOG.title} {from === y || !from ? y : `${from} - ${y}`}
+          <p className="font-mono tracking-tight">
+            {BLOG.title}, {from === y || !from ? y : `${from} - ${y}`}
           </p>
           <div className="flex gap-4">
             <Link

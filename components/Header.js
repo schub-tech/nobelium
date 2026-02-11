@@ -15,13 +15,13 @@ const NavBar = () => {
   ]
   return (
     <div className="flex-shrink-0">
-      <ul className="flex flex-row">
+      <ul className="flex flex-row gap-6 md:gap-10">
         {links.map(
           link =>
             link.show && (
               <li
                 key={link.id}
-                className="block ml-4 text-black dark:text-gray-50 nav"
+                className="block text-sm text-black dark:text-gray-50 nav font-mono tracking-tight"
               >
                 <Link href={link.to} target={link.external ? '_blank' : null}>{link.name}</Link>
               </li>
@@ -85,7 +85,7 @@ export default function Header ({ navBarTitle, fullWidth }) {
       <div className="observer-element h-4 md:h-12" ref={sentinelRef}></div>
       <div
         className={`sticky-nav group m-auto w-full h-6 flex flex-row justify-between items-center mb-2 md:mb-12 py-8 bg-opacity-60 ${
-          !fullWidth ? 'max-w-3xl px-4' : 'px-4 md:px-24'
+          !fullWidth ? 'max-w-6xl px-4' : 'px-4 md:px-24'
         }`}
         id="sticky-nav"
         ref={navRef}
