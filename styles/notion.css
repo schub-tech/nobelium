@@ -320,7 +320,7 @@ pre[class*='language-'] {
 [data-post-slug='home'] .notion-text,
 [data-post-slug='about'] .notion-text,
 [data-post-slug='manifesto'] .notion-text {
-  @apply text-gray-400;
+  @apply text-white;
   line-height: 1.75;
   font-size: 1.05rem;
 }
@@ -344,7 +344,7 @@ pre[class*='language-'] {
 /* Bullet lists on pages */
 [data-post-slug='home'] .notion-list,
 [data-post-slug='about'] .notion-list {
-  @apply text-gray-400;
+  @apply text-white;
   list-style: none;
   padding-inline-start: 0;
   font-size: 1.05rem;
@@ -628,7 +628,7 @@ pre[class*='language-'] {
 [data-post-slug='manifesto'] .notion-text {
   font-size: 1.15rem;
   line-height: 1.85;
-  max-width: 720px;
+  max-width: 900px;
 }
 
 [data-post-slug='manifesto'] .notion-hr {
