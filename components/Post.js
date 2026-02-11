@@ -25,7 +25,9 @@ export default function Post (props) {
   const { post, blockMap, emailHash, fullWidth = false } = props
   const { dark } = useTheme()
   const notionRootRef = useRef(null)
+  const isPage = post.type?.[0] === 'Page'
 
+  // About page: group residents into a grid
   useEffect(() => {
     if (post.slug !== 'about') return
 
@@ -70,18 +72,83 @@ export default function Post (props) {
     }
   }, [post.slug])
 
+  // Home page: group speakers into a grid
+  useEffect(() => {
+    if (post.slug !== 'home') return
+
+    const root = notionRootRef.current
+    if (!root) return
+
+    const notionPage = root.querySelector('.notion-page')
+    if (!notionPage || notionPage.querySelector('.home-speakers-grid')) return
+
+    const speakersHeading = Array.from(notionPage.querySelectorAll('h3.notion-h2'))
+      .find(node => node.textContent?.trim() === 'Guest Speakers')
+    if (!speakersHeading) return
+
+    const grid = document.createElement('div')
+    grid.className = 'home-speakers-grid'
+
+    // Find the intro text after the heading (skip it)
+    let cursor = speakersHeading.nextElementSibling
+    if (cursor && cursor.classList.contains('notion-text')) {
+      cursor = cursor.nextElementSibling
+    }
+
+    while (cursor) {
+      const nameNode = cursor
+      // Speaker cards: H3 (name), then text (title), then image
+      if (
+        nameNode?.tagName !== 'H4' ||
+        !nameNode.classList.contains('notion-h3')
+      ) {
+        break
+      }
+
+      const card = document.createElement('div')
+      card.className = 'home-speaker-card'
+      let nextCursor = nameNode.nextElementSibling
+
+      card.appendChild(nameNode)
+
+      // Grab the subtitle text if present
+      if (nextCursor && nextCursor.classList.contains('notion-text')) {
+        const afterText = nextCursor.nextElementSibling
+        card.appendChild(nextCursor)
+        nextCursor = afterText
+      }
+
+      // Grab the image if present
+      if (nextCursor && nextCursor.tagName === 'FIGURE' && nextCursor.classList.contains('notion-asset-wrapper-image')) {
+        const afterImage = nextCursor.nextElementSibling
+        card.appendChild(nextCursor)
+        nextCursor = afterImage
+      }
+
+      grid.appendChild(card)
+      cursor = nextCursor
+    }
+
+    if (grid.children.length > 0) {
+      speakersHeading.insertAdjacentElement('afterend', grid)
+    }
+  }, [post.slug])
+
   return (
     <article
       className={cn('flex flex-col', fullWidth ? 'md:px-24' : 'items-center')}
       data-post-slug={post.slug}
     >
-      <h1 className={cn(
-        'w-full font-bold text-3xl text-black dark:text-white font-mono tracking-tight',
-        { 'max-w-2xl px-4': !fullWidth }
-      )}>
-        {post.title}
-      </h1>
-      {post.type[0] !== 'Page' && (
+      {post.slug !== 'home' && (
+        <h1 className={cn(
+          'w-full font-bold text-3xl text-black dark:text-white font-mono tracking-tight',
+          { 'max-w-2xl px-4': !fullWidth && !isPage },
+          { 'max-w-4xl px-4': !fullWidth && isPage }
+        )}>
+          {post.title}
+        </h1>
+      )}
+      {!isPage && (
         <nav className={cn(
           'w-full flex mt-7 items-start text-gray-500 dark:text-gray-400',
           { 'max-w-2xl px-4': !fullWidth }
@@ -115,15 +182,20 @@ export default function Post (props) {
         {!fullWidth && <div className="flex-1 hidden lg:block" />}
         <div
           ref={notionRootRef}
-          className={fullWidth ? 'flex-1 pr-4' : 'flex-none w-full max-w-2xl px-4'}
+          className={cn({
+            'flex-1 pr-4': fullWidth,
+            'flex-none w-full max-w-4xl px-4': !fullWidth && isPage,
+            'flex-none w-full max-w-2xl px-4': !fullWidth && !isPage
+          })}
         >
           <NotionRenderer recordMap={blockMap} fullPage={false} darkMode={dark} />
         </div>
-        <div className={cn('order-first lg:order-[unset] w-full lg:w-auto max-w-2xl lg:max-w-[unset] lg:min-w-[160px]', fullWidth ? 'flex-none' : 'flex-1')}>
-          {/* `65px` is the height of expanded nav */}
-          {/* TODO: Remove the magic number */}
-          <TableOfContents blockMap={blockMap} className="pt-3 sticky" style={{ top: '65px' }} />
-        </div>
+        {!isPage && (
+          <div className={cn('order-first lg:order-[unset] w-full lg:w-auto max-w-2xl lg:max-w-[unset] lg:min-w-[160px]', fullWidth ? 'flex-none' : 'flex-1')}>
+            {/* `65px` is the height of expanded nav */}
+            <TableOfContents blockMap={blockMap} className="pt-3 sticky" style={{ top: '65px' }} />
+          </div>
+        )}
       </div>
     </article>
   )

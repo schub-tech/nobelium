@@ -19,6 +19,7 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
   if (router.isFallback) return null
 
   const fullWidth = post.fullWidth ?? false
+  const isPage = post.type?.[0] === 'Page'
 
   return (
     <Container
@@ -37,35 +38,37 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
         fullWidth={fullWidth}
       />
 
-      {/* Back and Top */}
-      <div
-        className={cn(
-          'px-4 flex justify-between font-medium text-gray-500 dark:text-gray-400 my-5',
-          fullWidth ? 'md:px-24' : 'mx-auto max-w-2xl'
-        )}
-      >
-        <a>
-          <button
-            onClick={() => router.push(BLOG.path || '/')}
-            className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
-          >
-            ← {locale.POST.BACK}
-          </button>
-        </a>
-        <a>
-          <button
-            onClick={() => window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            })}
-            className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
-          >
-            ↑ {locale.POST.TOP}
-          </button>
-        </a>
-      </div>
+      {/* Back and Top - only for blog posts, not pages */}
+      {!isPage && (
+        <div
+          className={cn(
+            'px-4 flex justify-between font-medium text-gray-500 dark:text-gray-400 my-5',
+            fullWidth ? 'md:px-24' : 'mx-auto max-w-2xl'
+          )}
+        >
+          <a>
+            <button
+              onClick={() => router.push(BLOG.path || '/')}
+              className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
+            >
+              ← {locale.POST.BACK}
+            </button>
+          </a>
+          <a>
+            <button
+              onClick={() => window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              })}
+              className="mt-2 cursor-pointer hover:text-black dark:hover:text-gray-100"
+            >
+              ↑ {locale.POST.TOP}
+            </button>
+          </a>
+        </div>
+      )}
 
-      <Comments frontMatter={post} />
+      {!isPage && <Comments frontMatter={post} />}
     </Container>
   )
 }
@@ -73,7 +76,7 @@ export default function BlogPost ({ post, blockMap, emailHash }) {
 export async function getStaticPaths () {
   const posts = await getAllPosts({ includePages: true })
   return {
-    paths: posts.map(row => `${clientConfig.path}/${row.slug}`),
+    paths: posts.filter(row => row.slug !== 'home').map(row => `${clientConfig.path}/${row.slug}`),
     fallback: true
   }
 }
@@ -86,7 +89,7 @@ export async function getStaticProps ({ params: { slug } }) {
 
   const blockMap = await getPostBlocks(post.id)
   const emailHash = createHash('md5')
-    .update(clientConfig.email)
+    .update(clientConfig.email || '')
     .digest('hex')
     .trim()
     .toLowerCase()

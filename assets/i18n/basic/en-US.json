@@ -1,9 +1,10 @@
 {
   "NAV": {
-    "INDEX": "Blog",
+    "INDEX": "Home",
     "RSS": "RSS",
     "SEARCH": "Search",
-    "ABOUT": "About"
+    "ABOUT": "Who we are",
+    "MANIFESTO": "Manifesto"
   },
   "PAGINATION": {
     "PREV": "Prev",

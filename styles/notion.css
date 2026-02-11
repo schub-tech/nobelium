@@ -251,30 +251,262 @@ pre[class*='language-'] {
   @apply mb-0;
 }
 
+/* =============================================
+   PAGE-SPECIFIC STYLES (Schub website pages)
+   ============================================= */
+
+/* --- Shared page styles --- */
+
+/* Headings on pages: larger, bolder, Lekton monospace */
+[data-post-slug='home'] .notion-h1,
+[data-post-slug='about'] .notion-h1,
+[data-post-slug='manifesto'] .notion-h1 {
+  font-family: 'Lekton', monospace;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  @apply text-white;
+}
+
+[data-post-slug='home'] .notion-h2,
+[data-post-slug='about'] .notion-h2,
+[data-post-slug='manifesto'] .notion-h2 {
+  font-family: 'Lekton', monospace;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  @apply text-white;
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+[data-post-slug='home'] .notion-h3,
+[data-post-slug='about'] .notion-h3,
+[data-post-slug='manifesto'] .notion-h3 {
+  font-family: 'Lekton', monospace;
+  font-weight: 700;
+  @apply text-white;
+}
+
+/* Quote blocks on pages: styled as prominent callouts */
+[data-post-slug='home'] .notion-quote,
+[data-post-slug='about'] .notion-quote,
+[data-post-slug='manifesto'] .notion-quote {
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5em 1.2em;
+  font-family: 'Lekton', monospace;
+  font-size: 1.125rem;
+  @apply text-white;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Dividers: subtle white line */
+[data-post-slug='home'] .notion-hr,
+[data-post-slug='about'] .notion-hr,
+[data-post-slug='manifesto'] .notion-hr {
+  border-top-color: rgba(255, 255, 255, 0.15);
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Text blocks on pages */
+[data-post-slug='home'] .notion-text,
+[data-post-slug='about'] .notion-text,
+[data-post-slug='manifesto'] .notion-text {
+  @apply text-gray-300;
+  line-height: 1.7;
+}
+
+/* Links on pages */
+[data-post-slug='home'] .notion-text a,
+[data-post-slug='about'] .notion-text a,
+[data-post-slug='manifesto'] .notion-text a {
+  @apply text-white;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s;
+}
+
+[data-post-slug='home'] .notion-text a:hover,
+[data-post-slug='about'] .notion-text a:hover,
+[data-post-slug='manifesto'] .notion-text a:hover {
+  opacity: 0.7;
+}
+
+/* Bullet lists on pages */
+[data-post-slug='home'] .notion-list,
+[data-post-slug='about'] .notion-list {
+  @apply text-gray-300;
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+[data-post-slug='home'] .notion-list > li,
+[data-post-slug='about'] .notion-list > li {
+  padding-left: 0;
+  padding-right: 0;
+  position: relative;
+  padding-left: 1.2em;
+}
+
+[data-post-slug='home'] .notion-list > li::before,
+[data-post-slug='about'] .notion-list > li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* --- Home page hero --- */
+
+[data-post-slug='home'] .notion-h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  [data-post-slug='home'] .notion-h1 {
+    font-size: 3.5rem;
+  }
+}
+
+/* --- Home page speakers grid --- */
+
+[data-post-slug='home'] .home-speakers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  [data-post-slug='home'] .home-speakers-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-post-slug='home'] .home-speakers-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+[data-post-slug='home'] .home-speaker-card {
+  overflow: hidden;
+}
+
+[data-post-slug='home'] .home-speaker-card .notion-h3 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+
+[data-post-slug='home'] .home-speaker-card .notion-text {
+  font-size: 0.8rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  @apply text-gray-500;
+}
+
+[data-post-slug='home'] .home-speaker-card .notion-asset-wrapper-image {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+[data-post-slug='home'] .home-speaker-card .notion-asset-wrapper-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+[data-post-slug='home'] .home-speaker-card:hover .notion-asset-wrapper-image img {
+  filter: grayscale(0%);
+}
+
+/* --- Home page FAQ toggles --- */
+
+[data-post-slug='home'] .nobelium-toggle {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+}
+
+[data-post-slug='home'] .nobelium-toggle-title {
+  font-family: 'Lekton', monospace;
+  @apply text-white;
+  font-size: 1rem;
+}
+
+[data-post-slug='home'] .nobelium-toggle-content {
+  @apply text-gray-400;
+  padding-top: 0.5rem;
+}
+
+/* --- Home page CTA link --- */
+
+[data-post-slug='home'] .notion-text a[href*="dover"],
+[data-post-slug='home'] .notion-text a[href*="apply"] {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0.6rem 2rem;
+  text-decoration: none;
+  font-family: 'Lekton', monospace;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+[data-post-slug='home'] .notion-text a[href*="dover"]:hover,
+[data-post-slug='home'] .notion-text a[href*="apply"]:hover {
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+}
+
+/* --- About page --- */
+
+/* About page hero heading */
+[data-post-slug='about'] .notion-h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  [data-post-slug='about'] .notion-h1 {
+    font-size: 2.5rem;
+  }
+}
+
 /* About page grid for Residents & Alumni */
 
 [data-post-slug='about'] .about-residents-grid {
   display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
   margin-top: 1rem;
 }
 
 @media (min-width: 768px) {
   [data-post-slug='about'] .about-residents-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
   [data-post-slug='about'] .about-residents-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 [data-post-slug='about'] .about-resident-card .notion-h3 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }
 
 [data-post-slug='about'] .about-resident-card .notion-asset-wrapper-image {
@@ -286,4 +518,25 @@ pre[class*='language-'] {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  filter: grayscale(100%);
+}
+
+/* --- Manifesto page --- */
+
+[data-post-slug='manifesto'] .notion-h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  [data-post-slug='manifesto'] .notion-h1 {
+    font-size: 3rem;
+  }
+}
+
+[data-post-slug='manifesto'] .notion-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
 }
