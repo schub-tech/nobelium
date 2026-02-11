@@ -178,8 +178,11 @@ export default function Post (props) {
           )}
         </nav>
       )}
-      <div className="self-stretch -mt-4 flex flex-col items-center lg:flex-row lg:items-stretch">
-        {!fullWidth && <div className="flex-1 hidden lg:block" />}
+      <div className={cn(
+        'self-stretch -mt-4 flex flex-col items-center',
+        !isPage && 'lg:flex-row lg:items-stretch'
+      )}>
+        {!fullWidth && !isPage && <div className="flex-1 hidden lg:block" />}
         <div
           ref={notionRootRef}
           className={cn({
