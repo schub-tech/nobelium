@@ -93,7 +93,10 @@ const components = {
 
   toggle_nobelium: ({ block, children }) => (
     <Toggle block={block}>{children}</Toggle>
-  )
+  ),
+
+  // Disable image click-to-zoom
+  Modal: () => null
 }
 
 const mapPageUrl = id => `https://www.notion.so/${id.replace(/-/g, '')}`
